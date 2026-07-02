@@ -1,0 +1,19 @@
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: scroll 50s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
