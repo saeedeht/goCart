@@ -1,21 +1,36 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ProductDetail } from "./components/ProductDetail.jsx";
 
-import App from "./App.jsx";
 import "./index.css";
-import { Products } from "./components/Products.jsx";
+import { ProductDetail } from "./pages/ProductDetail.jsx";
+import { Products } from "./pages/Products.jsx";
+import { CheckOut } from "./pages/checkOut.jsx";
+import { Layout } from "./layouts/Layout.jsx";
+import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-  },
-  { path: "/product", element: <Products /> },
-  {
-    path: "/product/:id",
-    element: <ProductDetail />,
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/product",
+        element: <Products />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/check-out",
+        element: <CheckOut />,
+      },
+    ],
   },
 ]);
 

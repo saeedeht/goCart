@@ -1,6 +1,13 @@
 import { Box, Card, CardMedia, Rating, Typography } from "@mui/material";
 
 export const ProductCard = ({ image, title, price }) => {
+  const productTitle = (title) => {
+    const toArray = title.split(" ");
+    const firstTwoWords = toArray.slice(0, 2);
+    const newString = firstTwoWords.join(" ");
+    return newString;
+  };
+
   return (
     <Card
       elevation={0}
@@ -10,6 +17,10 @@ export const ProductCard = ({ image, title, price }) => {
         borderRadius: 3,
         bgcolor: "transparent",
         cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}>
       <CardMedia
         component="img"
@@ -22,11 +33,11 @@ export const ProductCard = ({ image, title, price }) => {
         }}
       />
 
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ mt: 1, display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-start",
             alignItems: "center",
           }}>
           <Typography
@@ -35,7 +46,7 @@ export const ProductCard = ({ image, title, price }) => {
               fontWeight: 600,
               color: "#111827",
             }}>
-            {title}
+            {productTitle(title)}
           </Typography>
 
           <Typography
@@ -43,6 +54,7 @@ export const ProductCard = ({ image, title, price }) => {
             sx={{
               fontWeight: 700,
               color: "#111827",
+              ml: "70px",
             }}>
             ${price}
           </Typography>

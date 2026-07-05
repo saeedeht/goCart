@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 
-export const MoreInfo = () => {
+export const Specification = () => {
   return (
     <>
-      <Grid>MoreInfo</Grid>
+      <Grid>Specification</Grid>
     </>
   );
 };

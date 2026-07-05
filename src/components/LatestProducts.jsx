@@ -23,7 +23,7 @@ export const LatestProducts = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid>
         <Grid
           item
           sx={{
@@ -71,7 +71,16 @@ export const LatestProducts = () => {
             </Button>
           </Box>
 
-          <Grid container spacing={3} mt={3}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+            mt={3}>
             {products.map((product) => (
               <Link
                 key={product.id}
