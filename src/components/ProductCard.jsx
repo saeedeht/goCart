@@ -33,11 +33,11 @@ export const ProductCard = ({ image, title, price }) => {
         }}
       />
 
-      <Box sx={{ mt: 1, display: "flex", flexDirection: "column" }}>
+      <Box sx={{ width: 240, mt: 1, display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
             alignItems: "center",
           }}>
           <Typography
@@ -54,7 +54,7 @@ export const ProductCard = ({ image, title, price }) => {
             sx={{
               fontWeight: 700,
               color: "#111827",
-              ml: "70px",
+              // ml: "70px",
             }}>
             ${price}
           </Typography>
@@ -65,7 +65,6 @@ export const ProductCard = ({ image, title, price }) => {
           readOnly
           size="small"
           sx={{
-            mt: 0.8,
             color: "#22c55e",
           }}
         />

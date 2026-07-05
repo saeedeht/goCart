@@ -5,12 +5,19 @@ import {
   TextField,
   Typography,
   InputAdornment,
+  Badge,
 } from "@mui/material";
 import { Link } from "react-router";
 import LocalGroceryStoreOutlinedIcon from "@mui/icons-material/LocalGroceryStoreOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { useCartStore } from "../store/CartStore";
 
 export const Navbar = () => {
+  const cart = useCartStore((state) => state.cart);
+  // const addToCart = useCartStore((state) => state.addToCart);
+
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <Grid
@@ -60,7 +67,7 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/shop"
+              to="/product"
               style={{
                 textDecoration: "none",
                 color: "#6b7280",
@@ -70,7 +77,7 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/about"
+              to="/"
               style={{
                 textDecoration: "none",
                 color: "#6b7280",
@@ -80,7 +87,7 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/contact"
+              to="/"
               style={{
                 textDecoration: "none",
                 color: "#6b7280",
@@ -119,15 +126,22 @@ export const Navbar = () => {
               alignItems: "center",
               gap: 2,
             }}>
-            <Button
-              startIcon={<LocalGroceryStoreOutlinedIcon />}
-              sx={{
-                color: "#111827",
-                textTransform: "none",
-                fontWeight: 600,
-              }}>
-              Cart
-            </Button>
+            <Link to="/check-out" style={{ textDecoration: "none" }}>
+              <Badge
+                badgeContent={totalItems}
+                color="success"
+                overlap="circular">
+                <Button
+                  startIcon={<LocalGroceryStoreOutlinedIcon />}
+                  sx={{
+                    color: "#111827",
+                    textTransform: "none",
+                    fontWeight: 600,
+                  }}>
+                  Cart
+                </Button>
+              </Badge>
+            </Link>
 
             <Button
               variant="contained"

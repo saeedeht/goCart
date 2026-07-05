@@ -1,56 +1,51 @@
-import { Box, Button, Rating, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Rating, Stack, Typography } from "@mui/material";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import { useEffect, useState } from "react";
-// import { getProduct } from "../api/products";
+import { getProduct } from "../api/products";
 import { useParams } from "react-router";
+import { useCartStore } from "../store/CartStore";
 
 export const ProductDetail = () => {
   const { id } = useParams();
-  // console.log("useParams", useParams());
   const [product, setProduct] = useState(null);
+
+  const addToCart = useCartStore((state) => state.addToCart);
+  const cart = useCartStore((state) => state.cart);
+
+  const increaseQuantity = useCartStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          `https://api.escuelajs.co/api/v1/products/${id}`,
-        );
-
-        const data = await response.json();
-
-        console.log("id:", id);
-        console.log("response:", response.status);
-        console.log("data:", data);
-
+        const data = await getProduct(id);
         setProduct(data);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     };
 
     fetchProduct();
   }, [id]);
 
+  const cartItem = cart.find((item) => item.id === product?.id);
+
   return (
     <Box
       sx={{
-        maxWidth: "1200px",
-        mx: "auto",
-        mt: 6,
-        px: 4,
         display: "flex",
         gap: 8,
         flexWrap: "wrap",
+        padding: "40px",
       }}>
       <img
-        component="img"
         src={product?.images[0]}
         alt="Smart Speaker"
-        sx={{
-          width: { xs: "100%", md: 450 },
-          height: 450,
+        style={{
+          width: "500px",
+          height: "500px",
           objectFit: "cover",
-          borderRadius: 3,
+          borderRadius: "12px",
         }}
       />
 
@@ -60,11 +55,11 @@ export const ProductDetail = () => {
           minWidth: 300,
         }}>
         <Typography variant="h4" fontWeight={700}>
-          {product.title}
+          {product?.title}
         </Typography>
 
         <Typography color="text.secondary" mb={2}>
-          {product.category.name}
+          {product?.category.name}
         </Typography>
 
         <Stack direction="row" spacing={1} alignItems="center">
@@ -74,7 +69,7 @@ export const ProductDetail = () => {
 
         <Stack direction="row" spacing={2} alignItems="center" mt={3}>
           <Typography variant="h4" color="success.main" fontWeight={700}>
-            ${product.price}
+            ${product?.price}
           </Typography>
 
           <Typography
@@ -87,21 +82,55 @@ export const ProductDetail = () => {
         </Stack>
 
         <Typography color="error.main" fontWeight={600} mt={1} mb={4}>
-          {product.description}
+          {product?.description}
         </Typography>
 
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          sx={{
-            bgcolor: "#7c3aed",
-            borderRadius: 3,
-            py: 1.8,
-            mb: 4,
-          }}>
-          Add to Cart
-        </Button>
+        {cartItem ? (
+          <Grid
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: 2,
+            }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: 200,
+                border: "1px solid #ddd",
+                borderRadius: 2,
+                overflow: "hidden",
+                mb: 4,
+                mt: 4,
+              }}>
+              <Button onClick={() => decreaseQuantity(product.id)}>-</Button>
+
+              <Typography fontWeight={700}>{cartItem.quantity}</Typography>
+
+              <Button onClick={() => increaseQuantity(product.id)}>+</Button>
+            </Box>
+            <Button variant="contained" sx={{ bgcolor: "#23914b" }}>
+              View Cart
+            </Button>
+          </Grid>
+        ) : (
+          <Button
+            onClick={() => addToCart(product)}
+            variant="contained"
+            size="large"
+            sx={{
+              width: "600px",
+              bgcolor: "#23914b",
+              borderRadius: 3,
+              py: 1.8,
+              mb: 4,
+              mt: 4,
+            }}>
+            Add to Cart
+          </Button>
+        )}
 
         <Stack spacing={2}>
           <Stack direction="row" spacing={1}>
