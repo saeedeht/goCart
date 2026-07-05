@@ -2,10 +2,7 @@ import { Box, Card, CardMedia, Rating, Typography } from "@mui/material";
 
 export const ProductCard = ({ image, title, price }) => {
   const productTitle = (title) => {
-    const toArray = title.split(" ");
-    const firstTwoWords = toArray.slice(0, 2);
-    const newString = firstTwoWords.join(" ");
-    return newString;
+    return title.split(" ").slice(0, 2).join(" ");
   };
 
   return (
@@ -43,7 +40,7 @@ export const ProductCard = ({ image, title, price }) => {
           <Typography
             variant="subtitle1"
             sx={{
-              fontWeight: 600,
+              fontWeight: 400,
               color: "#111827",
             }}>
             {productTitle(title)}
@@ -52,9 +49,8 @@ export const ProductCard = ({ image, title, price }) => {
           <Typography
             variant="subtitle1"
             sx={{
-              fontWeight: 700,
+              fontWeight: 500,
               color: "#111827",
-              // ml: "70px",
             }}>
             ${price}
           </Typography>

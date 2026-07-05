@@ -1,5 +1,4 @@
 import { Grid, Typography } from "@mui/material";
-// import { ProductCard } from "./ProductCard";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/products";
